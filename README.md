@@ -13,7 +13,7 @@ to the **Development** environment. During a deployment, AWS CodeBuild uses
 `buildspec.yml` to build the Docker image, push it to Amazon ECR, and 
 deploy the new version to ECS.
 
-## Project Architecture on AWS
+## Project architecture on AWS:
 
 ![Project architecture](assets/architecture.png)
 
