@@ -8,7 +8,7 @@ from the database.
 - **Storage**: Data is stored in **PostgreSQL**, which is hosted on **Amazon RDS**.
 - **Containers**: Images are stored in AWS ECR (Elastic Container Registry).
 - **CI/CD**: The CI/CD workflow is managed by **AWS CodePipeline**. The pipeline is
-triggered on pushes to the `main` branch. If tests succeed, the changes are promoted
+triggered on pushes to the `main` branch. If unit tests succeed, changes are promoted
 to the **Development** environment. During a deployment, AWS CodeBuild uses
 `buildspec.yml` to build the Docker image, push it to Amazon ECR, and 
 deploy the new version to ECS.
