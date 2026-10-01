@@ -17,9 +17,9 @@ deploy the new version to ECS.
 
 ![Project architecture](assets/architecture.png)
 
-- **Application Load Balancer (ALB)**: Receives incoming HTTP/HTTPS traffic and distributes requests across the ECS tasks.
+- **Application Load Balancer (ALB)**: Receives incoming HTTP/HTTPS traffic and distributes requests across the ECS tasks. The ALB listeners accept traffic on ports 80 and 443, while the associated Target Groups forward requests to port 3000, where the Node.js application is listening.
 - **ECS Cluster**: Runs only the application containers, with one Node.js API container in each private subnet, for high availability.
-- **Private Subnets**: The ECS tasks run in separate Availability Zones and are not directly accessible from the internet.
+- **Private Subnets**: The ECS tasks run in separate Availability Zones and are not directly accessible from the internet.
 - **RDS PostgreSQL**: The database receives traffic from the app instances only.
 - **NAT Gateway (Regional)**: Provides outbound internet access for resources in the private subnets without exposing them to the public internet.
 - **Internet Gateway**: Provides connectivity between the VPC and the public internet.
