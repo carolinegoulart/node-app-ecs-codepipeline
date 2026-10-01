@@ -9,6 +9,7 @@ phases:
       - npm ci
   pre_build:
     commands:
+      # Run unit tests
       - npm test
       - SHA=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION)
       # Log in to Amazon ECR
