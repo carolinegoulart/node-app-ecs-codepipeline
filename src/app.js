@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/health", (_req, res) => res.json({ status: "ok" }));
-app.get("/", (_req, res) => res.json({ status: "Base Route" }));
+app.get("/", (_req, res) => res.json({ status: "Base path" }));
 app.use("/api", routes);
 
 app.use(notFound);
