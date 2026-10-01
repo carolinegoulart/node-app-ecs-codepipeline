@@ -82,3 +82,19 @@ Amazon ECS → Node.js API → Amazon RDS for PostgreSQL
 The ECS task receives the database connection variables and other 
 environment variables through its Task Definition. Production
 deployments should enable SSL by setting `PG_SSL=true`.
+
+## Running unit tests
+
+Install the dependencies and run the test suite:
+
+```bash
+npm ci
+npm test
+```
+
+The unit tests use Vitest and cover the product controller's successful
+responses, not-found responses, and error handling. Running
+`docker compose up --build` does not execute the tests.
+
+In CI/CD, AWS CodeBuild automatically runs the tests through `buildspec.yml`
+before building and pushing the Docker image. A test failure stops the build.
