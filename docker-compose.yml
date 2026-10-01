@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: products-db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+    ports:
+      - ${PG_PORT}:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:  
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER} -d ${PG_DATABASE}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: products-api
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - ${PORT}:3000
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+      - PG_HOST=db
+      - PG_PORT=5432
+    volumes:
+      - .:/app
+    entrypoint: ["sh", "docker/entrypoint.sh"]
+
+volumes:
+  db_data:

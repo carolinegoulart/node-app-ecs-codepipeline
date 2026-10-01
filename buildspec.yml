@@ -1,0 +1,28 @@
+version: 0.2
+run-as: root
+
+phases:
+  pre_build:
+    commands:
+      - SHA=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION)
+      # Log in to Amazon ECR
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
+  build:
+    commands:
+      # Build the Docker image
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build -t $REPOSITORY_URI:$SHA .
+  post_build:
+    commands:
+      # Push the Docker image to Amazon ECR
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $REPOSITORY_URI:$SHA
+      - echo Writing image definitions file...
+      - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $REPOSITORY_URI:$SHA > imagedefinitions.json
+
+artifacts:
+  files: imagedefinitions.json
