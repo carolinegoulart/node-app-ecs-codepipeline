@@ -2,6 +2,16 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ProductController } from './product.controller.js';
 import { ProductService } from '../services/product.service.js';
 
+vi.mock('../services/product.service.js', () => ({
+  ProductService: {
+    list: vi.fn(),
+    create: vi.fn(),
+    getById: vi.fn(),
+    update: vi.fn(),
+    remove: vi.fn()
+  }
+}));
+
 const createResponse = () => ({
   json: vi.fn(),
   send: vi.fn(),
