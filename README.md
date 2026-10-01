@@ -7,11 +7,11 @@ products. It includes APIs to create, read, udpate, and delete products
 from the database.
 - **Storage**: Data is stored in **PostgreSQL**, which is hosted on **Amazon RDS**.
 - **Containers**: Images are stored in AWS ECR (Elastic Container Registry).
-- **CI/CD**: The CI/CD workflow is managed by **AWS CodePipeline**. The pipeline is
-triggered on pushes to the `main` branch. If unit tests succeed, changes are promoted
-to the **Development** environment. During a deployment, AWS CodeBuild uses
-`buildspec.yml` to build the Docker image, push it to Amazon ECR, and 
-deploy the new version to ECS.
+- **CI/CD**: The CI/CD workflow is managed by **AWS CodePipeline**, such that:
+     - The pipeline is triggered on pushes to the `main` branch.
+     - The pipeline uses a Blue-green deployment strategy.
+     - If unit tests succeed, changes are promoted to the **Development** environment.
+     - During a deployment, AWS CodeBuild uses the `buildspec.yml` file to build the Docker image, push it to Amazon ECR, and deploy the new version to ECS.
 
 ## 🏗️ Project architecture on AWS:
 
@@ -74,7 +74,7 @@ Source repository
       ↓
 AWS CodePipeline
       ↓
-AWS CodeBuild → Docker image → Amazon ECR
+AWS CodeBuild → Unit Tests → Docker image → Amazon ECR
       ↓
 Amazon ECS → Node.js API → Amazon RDS for PostgreSQL
 ```
