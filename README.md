@@ -1,6 +1,6 @@
 # Node.js API on AWS ECS
 
-## Project summary:
+## 📋 Project summary:
 
 - **API**: Simple REST API built with Node.js and Express to manage
 products. It includes APIs to create, read, udpate, and delete products
@@ -13,7 +13,7 @@ to the **Development** environment. During a deployment, AWS CodeBuild uses
 `buildspec.yml` to build the Docker image, push it to Amazon ECR, and 
 deploy the new version to ECS.
 
-## Project architecture on AWS:
+## 🏗️ Project architecture on AWS:
 
 ![Project architecture](assets/architecture.png)
 
@@ -25,7 +25,7 @@ deploy the new version to ECS.
 - **Internet Gateway**: Provides connectivity between the VPC and the public internet.
 - **VPC**: Hosts the entire application infrastructure.
 
-## Technology stack
+## 🛠️ Technology stack
 
 - Node.js 20 and Express
 - PostgreSQL and Amazon RDS
@@ -34,7 +34,7 @@ deploy the new version to ECS.
 - Amazon ECS
 - AWS CodePipeline and CodeBuild
 
-## API endpoints
+## 🔌 API endpoints
 
 - `GET /health` — health check
 - `GET /api/products` — list products
@@ -43,7 +43,7 @@ deploy the new version to ECS.
 - `PUT /api/products/:id` — update a product
 - `DELETE /api/products/:id` — delete a product
 
-## Running locally
+## 💻 Running locally
 
 Create a `.env` file with the required settings:
 
@@ -67,7 +67,7 @@ The API will be available at `http://localhost:3000`. The container entrypoint
 waits for PostgreSQL, runs the Knex migrations and development seed, and then
 starts the server.
 
-## Deployment flow
+## 🚀 Deployment flow
 
 ```text
 Source repository
@@ -83,7 +83,7 @@ The ECS task receives the database connection variables and other
 environment variables through its Task Definition. Production
 deployments should enable SSL by setting `PG_SSL=true`.
 
-## Running unit tests
+## 🧪 Running unit tests
 
 Install the dependencies and run the test suite:
 
